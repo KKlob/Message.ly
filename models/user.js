@@ -2,7 +2,6 @@
 const client = require('../db');
 const bcrypt = require('bcrypt');
 const { BCRYPT_WORK_FACTOR } = require('../config');
-const ExpressError = require('../expressError');
 
 
 /** User of the site. */
