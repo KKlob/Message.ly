@@ -20,5 +20,13 @@
     "supertest": "^4.0.2"
   },
   "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KKlob/Message.ly.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KKlob/Message.ly/issues"
+  },
+  "homepage": "https://github.com/KKlob/Message.ly#readme",
   "description": ""
 }
