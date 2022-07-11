@@ -36,7 +36,7 @@ class Message {
 
   /** Update read_at for message */
 
-  async markRead(id) {
+  static async markRead(id) {
     const result = await db.query(
       `UPDATE messages
            SET read_at = current_timestamp
