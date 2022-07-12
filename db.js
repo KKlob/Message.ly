@@ -7,5 +7,4 @@ const client = new Client(DB_URI);
 
 client.connect();
 
-
 module.exports = client;

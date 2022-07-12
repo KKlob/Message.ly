@@ -1,3 +1,5 @@
+process.env.NODE_ENV = "test";
+
 const request = require("supertest");
 const jwt = require("jsonwebtoken");
 
@@ -72,8 +74,9 @@ describe("Auth Routes Test", function () {
             expect(response.statusCode).toEqual(400);
         });
     });
+
+    afterAll(async function () {
+        await db.end();
+    });
 });
 
-afterAll(async function () {
-    await db.end();
-});

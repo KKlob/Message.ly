@@ -4,7 +4,6 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('../config');
 const ExpressError = require('../expressError');
-const JWT_OPTIONS = { expiresIn: 60 * 60 }; // expires in 1 hour
 
 /** POST /login - login: {username, password} => {token}
  *
@@ -12,16 +11,16 @@ const JWT_OPTIONS = { expiresIn: 60 * 60 }; // expires in 1 hour
  *
  **/
 
-router.post('/login', function (req, res, next) {
+router.post('/login', async function (req, res, next) {
     try {
         const { username, password } = req.body;
-        const result = User.authenticate(username, password);
+        const result = await User.authenticate(username, password);
         if (result) {
             // create jwt token to pass back to client
             let payload = { username };
-            let token = jwt.sign(payload, SECRET_KEY, JWT_OPTIONS);
+            let token = jwt.sign(payload, SECRET_KEY);
             // update user last_logged_in
-            User.updateLoginTimestamp(username);
+            await User.updateLoginTimestamp(username);
             return res.json({ token });
         }
         throw new ExpressError("Invalid user/password", 400);
@@ -38,13 +37,13 @@ router.post('/login', function (req, res, next) {
  *  Make sure to update their last-login!
  */
 
-router.post('/register', function (req, res, next) {
+router.post('/register', async function (req, res, next) {
     try {
-        const user = User.register(req.body);
+        const user = await User.register(req.body);
         let payload = { username: user.username };
-        let token = jwt.sign(payload, SECRET_KEY, JWT_OPTIONS);
+        let token = jwt.sign(payload, SECRET_KEY);
         // update user last_logged_in
-        User.updateLoginTimestamp(user.username);
+        await User.updateLoginTimestamp(user.username);
         return res.json({ token });
     } catch (err) {
         return next(err);
